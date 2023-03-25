@@ -15,7 +15,7 @@ class _MySignInPageState extends State<MySignInPage> {
   TextEditingController passwordController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
-
+  bool isValid = true;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -119,7 +119,11 @@ class _MySignInPageState extends State<MySignInPage> {
                           controller: passwordController,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please Enter Your Password';
+                              return 'Give Your Password';
+                            } else if (value.length < 6) {
+                              return 'Should Be At Least 6 Characters';
+                            } else if (value.length > 15) {
+                              return 'Should Not Be More Than 15 Characters';
                             } else {
                               return null;
                             }
@@ -189,13 +193,34 @@ class _MySignInPageState extends State<MySignInPage> {
                           ),
                           child: ElevatedButton(
                             onPressed: () {
-                              if (formKey.currentState!.validate()) {
+                              if (mailController.text.isEmpty &&
+                                  passwordController.text.isEmpty) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                     content: Text(
-                                      'Data Processing .............',
+                                      'Please Enter The All Requirements',
                                     ),
                                   ),
+                                );
+                                return;
+                              }
+                              isValid = formKey.currentState!.validate();
+                              if (!isValid) {
+                                return;
+                              } else {
+                                print("E_Mail: ${mailController.text}");
+                                print("Password: ${passwordController.text}");
+                                mailController.clear();
+                                passwordController.clear();
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      'Data Has Been Entered Successfully',
+                                    ),
+                                  ),
+                                );
+                                print(
+                                  'Well Done \n Keep it up !!!',
                                 );
                               }
                             },

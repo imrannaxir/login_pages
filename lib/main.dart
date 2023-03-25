@@ -19,7 +19,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.brown,
       ),
-      home: const MySignInPage(),
+      home: const MyLoginPage(),
     );
   }
 }
+
+
+// git add .                       //to track all changes
+//git commit -m "your message"     // to give identity you changes
+//git push -u origin master        // to push the code on master branch
